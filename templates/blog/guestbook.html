@@ -1,0 +1,89 @@
+{% load staticfiles %}
+{% load blog_tags %}
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>安</title>
+<meta name="keywords" content="个人博客" />
+<meta name="description" content="" />
+<link rel="stylesheet" href="{% static 'blog/css/index.css' %}"/>
+<link rel="stylesheet" href="{% static 'blog/css/style.css'%}"/>
+<link rel="stylesheet" href="{% static 'blog/css/animate.css' %}"/>
+<script type="text/javascript" src="{% static 'blog/js/jquery1.42.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'blog/js/jquery.SuperSlide.2.1.1.js' %}"></script>
+<!--[if lt IE 9]>
+<script src="js/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <!--header start-->
+    <div id="header">
+      <h1>个人博客</h1>
+        <p>且将新火试新茶。诗酒趁年华</p>
+    </div>
+     <!--header end-->
+    <!--nav-->
+     <div id="nav">
+        <ul>
+         <li><a href="{% url 'blog:index' %}">首页</a></li>
+         <li><a href="{% url 'blog:index_all' %}">所有文章</a></li>
+         <li><a href="{% url 'diary:get_diary' %}">个人日记</a></li>
+         <li><a href="{% url 'blog:post_xc' %}">相册展示</a></li>
+         <li><a href="{% url 'blog:post_simple' %}">关于我</a></li>
+         <li><a href="{% url 'comments:get_form' %}">留言板</a></li>
+         <div class="clear"></div>
+        </ul>
+      </div>
+       <!--nav end-->
+    <!--content start-->
+    <div id="content">
+       <!--left-->
+         <div class="left" >
+           <div class="g_content">
+             <p>请输入你的姓名和留言内容</p>
+               <form action="/guestbook/" method="post">
+                姓名: <input type="text" name="name"> <br>
+                留言内容: <input type="text" name="text"> <br>
+                   <input type="submit" value="提交">
+               {% csrf_token %}
+            </form>
+                                <!--时光-->
+              <div class="shiguang animated bounceIn">
+                <div class="left sg_ico">
+                </div>
+                  {% for post in  post_get %}
+               <ul class="say_box">
+                         <div class="sy">
+                             <p> {{ post.text }}</p>
+                         </div>
+                      <span class="dateview">{{ post.name }}</span>
+               </ul>
+                {% empty %}
+                暂无内容！
+                {% endfor %}
+              {% if post_get.has_previous %}
+                <li><a href="?page={{ post_get.previous_page_number }}">上一页</a></li>
+              {% else %}
+                <li><a >上一页</a></li>
+              {% endif %}
+                  <li>{{ post_get.number }}/{{ post_get.paginator.num_pages }}</li>
+              {% if post_get.has_next %}
+                  <li><a href="?page={{ post_get.next_page_number }}">下一页</a></li>
+              {% else %}
+                <li><a >下一页</a></li>
+              {% endif %}
+
+                <div class="right sg_text">
+                </div>
+                <div class="clear"></div>
+              </div>
+              <!--时光 end-->
+           </div>
+         </div>
+    <!--content end-->
+    <script type="text/javascript">jQuery(".lanmubox").slide({easing:"easeOutBounce",delayTime:400});</script>
+    <script  type="text/javascript" src="js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+{% load staticfiles %}
+{% load blog_tags %}
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>安</title>
+<meta name="keywords" content="个人博客" />
+<meta name="description" content="" />
+<link rel="stylesheet" href="{% static 'blog/css/index.css' %}"/>
+<link rel="stylesheet" href="{% static 'blog/css/style.css'%}"/>
+<script type="text/javascript" src="{% static 'blog/js/jquery1.42.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'blog/js/jquery.SuperSlide.2.1.1.js' %}"></script>
+<!--[if lt IE 9]>
+<script src="js/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <!--header start-->
+    <div id="header">
+      <h1>个人博客</h1>
+        <p>且将新火试新茶。诗酒趁年华</p>
+    </div>
+     <!--header end-->
+    <!--nav-->
+     <div id="nav">
+        <ul>
+         <li><a href="{% url 'blog:index' %}">首页</a></li>
+         <li><a href="{% url 'blog:index_all' %}">所有文章</a></li>
+         <li><a href="{% url 'diary:get_diary' %}">个人日记</a></li>
+         <li><a href="{% url 'blog:post_xc' %}">相册展示</a></li>
+         <li><a href="{% url 'blog:post_simple' %}">关于我</a></li>
+         <li><a href="{% url 'comments:get_form' %}">留言板</a></li>
+         <div class="clear"></div>
+        </ul>
+      </div>
+       <!--nav end-->
+    <!--content start-->
+    <div id="content">
+       <!--left-->
+         <div class="left" id="news">
+           <div class="weizi">
+           <div class="wz_text">当前位置：<a href="{% url 'blog:index' %}">首页</a>><span>文章内容</span></div>
+           </div>
+           <div class="news_content">
+                  <div class="news_top">
+                    <h1>{{post.title}}</h1>
+                    <p>
+                      <span class="left sj">时间: {{ post.created_time|date:"Y-m-d"}}</span><span class="left fl">分类:{{ post.category }}</span>
+                      <span class="left author">{{ post.auth }}</span>
+                    </p>
+                    <div class="clear"></div>
+                  </div>
+                    <div class="news_text">
+                  {{ post.body|safe }}
+                    </div>
+           </div>
+     
+         </div>
+         <!--end left -->
+         <!--right-->
+          <div class="right" id="c_right">
+          <div class="s_about">
+          <h2>关于博主</h2>
+           <img src="{% static 'blog/images/me2.jpg' %}" width="230" height="230" alt="博主"/>
+           <p>博主：施佳俊</p>
+           <p>专业：机械设计制造及其自动化</p>
+           <p>简介：机械设计学生，互联网小白</p>
+           <p>爱好：篮球，游泳，除了琴棋书画</p>
+           <p>
+           <a href="http://wpa.qq.com/msgrd?v=3&uin=916508617&site=qq&menu=yes" title="在线联系博主"><span class="left b_1"></span></a><a href="https://jq.qq.com/?_wv=1027&k=5XO7ovP" title="加入QQ群，一起学习！"><span class="left b_2"></span></a>
+           <div class="clear"></div>
+           </p>
+          </div>
+          <!--栏目分类-->
+           <div class="lanmubox">
+              <div class="hd">
+               <ul><li>精心推荐</li><li>最新文章</li><li class="hd_3">随机文章</li></ul>
+              </div>
+              <div class="bd">
+              {% get_recommend_posts as recommend_post_list %}
+                <ul>
+                {% for post in recommend_post_list %}
+                <li>
+                  <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+                {% empty %}
+                暂无文章！
+                {% endfor %}
+               </ul>
+              {% get_recent_posts as recent_post_list %}
+                <ul>
+                {% for post in recent_post_list %}
+                <li>
+                  <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+                {% empty %}
+                暂无文章！
+                {% endfor %}
+               </ul>
+              {% get_random_posts as random_post_list %}
+                <ul>
+                {% for post in random_post_list %}
+                <li>
+                  <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+                {% empty %}
+                暂无文章！
+                {% endfor %}
+               </ul>
+              </div>
+           </div>
+           <!--end-->
+           <div class="link">
+            <h2>友情链接</h2>
+            <p><a href="https://user.qzone.qq.com/916508617">个人QQ空间</a></p>
+           </div>
+         </div>
+         <!--right end-->
+         <div class="clear"></div>
+    </div>
+    <!--content end-->
+    <script type="text/javascript">jQuery(".lanmubox").slide({easing:"easeOutBounce",delayTime:400});</script>
+    <script  type="text/javascript" src="js/nav.js"></script>
+</body>
+</html>
