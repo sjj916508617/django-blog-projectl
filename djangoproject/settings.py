@@ -25,7 +25,7 @@ SECRET_KEY = '@#16((vyn5)q_*5(c2(j6!i27+*bpw%x#*8j717y8%s2jl(zsx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost ', '.zmrenwu.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost ', '.shijiajun.cn']
 
 
 # Application definition
